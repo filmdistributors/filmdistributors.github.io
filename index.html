@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="icon" href="favicon.png" type="image/png" sizes="16x16">
+
+
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100&display=swap"
+        rel="stylesheet">
+
+
+
+
+    <!-- HIGHCHARTS SCRIPT -->
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/bullet.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+
+
+
+
+
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+ -->
+
+
+
+    <script type="module" src="https://d3js.org/d3.v6.min.js"></script>
+
+
+
+
+    <link href="style.css" rel="stylesheet">
+
+    <script src="script.js"></script>
+
+
+
+    <title>Distributor Dashboard</title>
+</head>
+
+
+
+
+<body>
+
+
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary mb-0">
+        <div class="flex-row d-flex">
+            <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas"
+                title="Toggle responsive left sidebar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <a class="navbar-brand align-middle" href="#"> <img src="dashboardLogo.png" alt="dashboard logo"
+                    style="width:40px;height:40px;"> <b> DISTRIBUTOR DASHBOARD</b></a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="collapsingNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">Home</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/filmdist/filmdist.github.io">Code </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <div class="container-fluid  " id="main">
+        <div class="row row-offcanvas row-offcanvas-left">
+            <div class="col-md-3 col-lg-3 sidebar-offcanvas pl-0" id="sidebar" role="navigation">
+                <ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
+
+
+                    <li class="nav-item pl-2 mb-2 mr-0 pr-0  mt-3 pt-3">
+
+                        <label for="selectStudio"> Chose a US Cinema Distributor:</label>
+
+                        <input list="selecStudio" onfocus="this.value=''" onchange="this.blur();" value="all distributors" name="browser" id="selectStudio" class="selectStyle">
+
+
+                            <datalist name="selectStudio" id="selecStudio">
+                        
+                         
+                            </datalist>
+                        </input>
+                            
+                        <br/>
+
+                        <label for="selectStudio"> Search distributor by movie:</label>
+
+
+
+
+                        <input list="selectMovi" onfocus="this.value=''" onchange="this.blur();" value="" name="browser" id="movieInput" class="selectStyle">
+
+
+                            <datalist name="movieId" id="selectMovi">
+                        
+                         
+                            </datalist>
+                        </input>
+                            
+
+                    </li>
+
+
+
+
+
+                    <li class="nav-item ml-3">
+
+              
+
+                        <div id="time-range ">
+                            <div class="sliders_step1">
+                                <div id="slider-range"></div>
+                            </div>
+
+                            <p> <b> Start Date: </b> <span id="startDate" class="slider-time"> </span> </p>
+
+                            <p> <b>End Date: </b> <span id="endDate" class="slider-time2"> </span>
+                            </p>
+
+
+                            <!-- //svp todo -->
+
+                            <!-- <label for="trip-start">Start date:</label>
+
+                            <input onchange="dateStartInputHandler(event);" type="date" id="startDate2" name="trip-start"
+                            value="1977-05-23" min ="1977-05-23">
+                            
+                            
+                            <label for="trip-end">End date:</label>
+        
+        
+                            <input type="date" id="endDate2" name="trip-end"
+                            value="2023-08-01"   max="2020-12-31">
+         -->
+
+                            
+                        </div>
+
+
+
+                    </li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="#">Code </a></li> -->
+                </ul>
+            </div>
+            <!--/col-->
+
+            <div class="col main pt-5 mt-3">
+
+
+
+
+                <div class="card-group mt-3">
+                    <div class="card rounded-lg mx-3">
+                        <div class="card-body">
+                            <h5 class="card-title"> Gross </h5>
+                            <h6 class="card-subtitle mb-2 text-muted"> gross box office earnings (USD) </h6>
+                            <p class="card-number" id="gross"></p>
+                        </div>
+                    </div>
+
+                    <div class="card rounded-lg mx-3">
+                        <div class="card-body">
+                            <h5 class="card-title"> Total Gross </h5>
+                            <h6 class="card-subtitle mb-2 text-muted"> all revenue earnings (USD) </h6>
+                            <p class="card-number" id="totalGross"></p>
+                        </div>
+                    </div>
+
+                    <div class="card rounded-lg mx-3">
+                        <div class="card-body">
+                            <h5 class="card-title"> Films </h5>
+                            <h6 class="card-subtitle mb-2 text-muted"> # of films released </h6>
+                            <p class="card-number" id="numberOfFilms"></p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+                <div class="row mb-3">
+
+
+                </div>
+                <!--/row-->
+
+
+
+                <div class="row justify-content-md-center align-items-start">
+
+                    <div class="col-7">
+
+
+                    </div>
+                    <div class="col-5 ">
+
+
+
+
+
+
+
+
+
+                    </div>
+
+
+
+
+
+
+
+                </div>
+
+
+
+                <div class="row">
+
+                    <div class="col main ">
+
+
+                        <div class="card-group">
+
+                            <div class="card rounded-lg mx-3">
+                                <div class="card-body">
+
+                                    <div id="grossChart"></div>
+
+                                </div>
+
+                            </div>
+
+
+
+
+                            <div class="card rounded-lg col-3 mr-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <b> Highest Grossing Film </b> <span id="maxTitle"> </span>   </h4>
+    
+                                        <table class="table">
+    
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">Gross</th>
+                                                    <td id="maxGross"> </td>
+                                                </tr>
+    
+                                                <tr>
+                                                    <th scope="row">Release Date</th>
+                                                    <td id="maxDate"> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row"># of theaters </th>
+                                                    <td id="maxTheater"> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Studio </th>
+                                                    <td id="maxStudio"> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+                                        <!-- <a href="#" class="btn ">Button</a> -->
+                                </div>
+                             
+                               
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+                </div>
+
+
+
+
+
+                <div class="row mt-4 justify-content-md-center">
+
+
+
+                    <div class="col-8">
+
+                        <div class="card rounded-lg ml-3 ">
+
+                            <div class="card-body">
+
+
+
+                                <figure class="highcharts-figure">
+                                    <div id="bubbleChart"></div>
+                                    <p class="highcharts-description">
+                                    </p>
+                                </figure>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-4">
+
+                        <div class="card mr-2">
+                            <img class="card-img-top img-fluid" id="movieCard">
+                            <div class="card-body">
+                                    
+
+                                <h5 class="card-title">
+                                   <b> Top 10 Grossing Films </b>
+
+                                    </h5>
+
+                                    <table class="table">
+
+                                        <tbody>
+                                            <tr>
+                                                <td id="movie1"> </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td id="movie2"> </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="movie3"> </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="movie4"> </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="movie5"> </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="movie6"> </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="movie7"> </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="movie8"> </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="movie9"> </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="movie10"> </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                    
+
+                             
+
+
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+
+
+
+
+                </div>
+
+
+
+                <div class="row mt-4">
+
+                    <div class="col main ">
+
+
+                        <div class="card-group">
+
+                            <div class="card rounded-lg mx-3">
+                                <div class="card-body">
+
+                                    
+                       
+                                    <div id="seasonGraph"></div>
+
+
+
+
+
+
+                                </div>
+
+                            </div>
+
+
+
+
+                            <div class="card rounded-lg mx-3">
+                                <div class="card-body">
+
+                                    <figure class="highcharts-figure">
+                                        <div id="pieGraph"></div>
+                                        <p class="highcharts-description">
+                                        </p>
+                                      </figure>
+
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+            <!--/main col-->
+        </div>
+
+    </div>
+    <!--/.container-->
+
+    <br> 
+    <!-- <footer class="container-fluid ">
+    </footer> -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This is a dashboard layout for Bootstrap 4. This is an example of the Modal component which you
+                        can use to show content.
+                        Any content can be placed inside the modal and it can use the Bootstrap grid classes.</p>
+                    <p>
+                        <a href="https://www.codeply.com/go/KrUO8QpyXP" target="_ext">Grab the code at Codeply</a>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary-outline" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</body>
+
+</html>
